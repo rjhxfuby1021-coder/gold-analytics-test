@@ -486,8 +486,8 @@ function update(){
 }
 document.addEventListener('click',e=>{
   const b=e.target.closest('.rb');if(b){const s=st(b.dataset.id),v=+b.dataset.v;s.v=s.v===v?0:v;$$(`.rb[data-id="${b.dataset.id}"]`).forEach(x=>x.setAttribute('aria-pressed',+x.dataset.v===s.v));const pi=PAL.findIndex(p=>p.id===b.dataset.id);if(pi>=0&&s.v===1)setPal(pi);const fi=FONT.findIndex(f=>f.id===b.dataset.id);if(fi>=0&&s.v===1)setFont(fi);$('#status').textContent='';update();return}
-  const tf=e.target.closest('[data-tryf]');if(tf){setFont(+tf.dataset.tryf);if(tf.classList.contains('btn'))$('#anims').scrollIntoView({behavior:RM?'auto':'smooth'});return}
-  const t=e.target.closest('[data-try]');if(t){setPal(+t.dataset.try);if(t.classList.contains('btn'))$('#fonts').scrollIntoView({behavior:RM?'auto':'smooth'})}
+  const tf=e.target.closest('[data-tryf]');if(tf){setFont(+tf.dataset.tryf);update();if(tf.classList.contains('btn'))$('#anims').scrollIntoView({behavior:RM?'auto':'smooth'});return}
+  const t=e.target.closest('[data-try]');if(t){setPal(+t.dataset.try);update();if(t.classList.contains('btn'))$('#fonts').scrollIntoView({behavior:RM?'auto':'smooth'})}
 });
 document.addEventListener('input',e=>{const id=e.target.dataset&&e.target.dataset.id;if(id&&e.target.type==='text'){st(id).c=e.target.value;update()}});
 let sending=0;
