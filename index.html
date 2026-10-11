@@ -1,6 +1,6 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Тест дизайна Gold Analytics</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Wix+Madefor+Display:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Unbounded:wght@400;600&family=Playfair+Display:wght@500;600&family=PT+Serif:wght@400;700&family=PT+Sans:wght@400;700&family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;700;800&family=Montserrat:wght@500;800&family=Inter:wght@400;500&family=Lora:wght@500;600&family=Source+Sans+3:wght@400;600&family=Tenor+Sans&family=Wix+Madefor+Text:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Wix+Madefor+Display:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Unbounded:wght@400;600&family=Playfair+Display:ital,wght@0,600;1,600&family=Prata&family=Cormorant+Garamond:ital,wght@1,600&family=Oswald:wght@600&family=Caveat:wght@700&family=IBM+Plex+Mono:wght@600&family=IBM+Plex+Sans:wght@400;500&family=Comfortaa:wght@700&family=Nunito:wght@400;600&family=Dela+Gothic+One&family=Marck+Script&family=Rubik+Mono+One&family=Manrope:wght@400;500&family=Inter:wght@400;500&family=Lora:wght@400;500&family=PT+Serif:wght@400;700&family=Wix+Madefor+Text:wght@400;500&display=swap">
 <style>
 /* Layout: нейтральный «лист опросника»; цвет живёт только внутри карточек палитр и сцен анимации */
 :root{
@@ -61,8 +61,10 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 .mock .cta{background:var(--pa);color:var(--po);font:500 13px/1 var(--f-body);padding:9px 14px;border-radius:6px}
 .fmock{border-bottom:1px solid var(--line);background:var(--pb);color:var(--pt);padding:26px 24px 24px;display:flex;flex-direction:column;gap:12px;align-items:flex-start;min-height:300px;transition:background .3s,color .3s}
 .fmock .br{font:500 11px/1 var(--fb);letter-spacing:.16em;text-transform:uppercase;color:var(--pa)}
-.fmock .hl{font-family:var(--fh);font-weight:var(--hw);font-size:var(--hs);line-height:1.12;letter-spacing:var(--hl);text-transform:var(--ht);text-wrap:balance}
-.fmock .hl em{font-style:normal;color:var(--pa)}
+.fmock{position:relative}
+.fmock .aa{position:absolute;top:14px;right:20px;font-family:var(--fh);font-style:var(--hi);font-weight:var(--hw);font-size:56px;line-height:1;color:var(--pa);opacity:.18;pointer-events:none}
+.fmock .hl{font-family:var(--fh);font-style:var(--hi);font-weight:var(--hw);font-size:var(--hs);line-height:1.12;letter-spacing:var(--hl);text-transform:var(--ht);text-wrap:balance;overflow-wrap:break-word;max-width:100%}
+.fmock .hl em{font-family:var(--fa,inherit);font-size:var(--as,1em);font-weight:var(--aw,inherit);font-style:var(--ai,inherit);text-transform:none;letter-spacing:0;color:var(--pa)}
 .fmock .tx{font-family:var(--fb);font-size:16px;line-height:1.65;color:var(--pt);max-width:42ch}
 .fmock .sb{font-family:var(--fb);font-size:13px;color:var(--pm)}
 .fmock .cta{font-family:var(--fb);background:var(--pa);color:var(--po);font-weight:500;font-size:14px;line-height:1;padding:12px 18px;border-radius:8px;margin-top:4px}
@@ -203,13 +205,13 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 
   <section class="sec" id="palettes">
     <h2>1. Цветовые гаммы</h2>
-    <p class="lead">Одиннадцать вариантов на одном и том же первом экране. Фон везде белый — гамма задаёт акцентный цвет, цвет текста и оттенок дополнительных плашек. Абзац обычного текста — для оценки читаемости. Кнопка «Примерить» (или палец вверх) перекрашивает шрифты и анимации ниже в выбранную гамму.</p>
+    <p class="lead">Тринадцать вариантов на одном и том же первом экране. Фон везде белый — гамма задаёт акцентный цвет, цвет текста и оттенок дополнительных плашек. Абзац обычного текста — для оценки читаемости. Кнопка «Примерить» (или палец вверх) перекрашивает шрифты и анимации ниже в выбранную гамму.</p>
     <div class="grid" id="pg"></div>
   </section>
 
   <section class="sec" id="fonts">
     <h2>2. Шрифты</h2>
-    <p class="lead">Сочетания шрифта заголовков и шрифта основного текста. Каждое показано в выбранной гамме — переключите её кнопками ниже, чтобы увидеть, как шрифт смотрится в другом цвете.</p>
+    <p class="lead">Двенадцать разных характеров шрифта — от строгой антиквы до рукописного. В каждой карточке шрифт заголовка и шрифт основного текста. Каждое показано в выбранной гамме — переключите её кнопками ниже, чтобы увидеть, как шрифт смотрится в другом цвете.</p>
     <div class="chips" role="group" aria-label="Гамма для примерки"></div>
     <div class="grid" id="gf"></div>
   </section>
@@ -262,6 +264,8 @@ const THUMB='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 9V5a3 3 0 
 
 const PAL=[
  ['Кейс вебинара: крем, терракота, графит','#F3EEE7','#FFFFFF','#B0573F','#33302C','#6B635B'],
+ ['Тёплый оранжевый и графит','#FFF3EA','#FFFFFF','#E8590C','#1F1B18','#6A5F57'],
+ ['Мандарин и тёмно-синий','#FFF1E6','#FFFFFF','#F26B1D','#14213D','#5A6275'],
  ['Крем и тёмная терракота','#F5F1EA','#FFFFFF','#A84A34','#2A2A2A','#5F5A54'],
  ['Крем, тёмно-синий и бордо','#F3EFE6','#FFFFFF','#7A1F2B','#1B2A4A','#555B6B'],
  ['Белый и тёмное золото','#FFFFFF','#F4F1EA','#8A6410','#14161B','#55524B'],
@@ -382,16 +386,19 @@ const ANIM=[
 
 /* пары шрифтов: заголовок / текст; w — насыщенность, s — размер, l — трекинг, t — регистр */
 const FONT=[
- ['Широкий гротеск','Unbounded + Golos Text','Unbounded','Golos Text',600,'25px','-.01em','none','Современно и уверенно, как у digital-агентств.'],
- ['Капслок как у AMA Digital','Wix Madefor Display + Wix Madefor Text','Wix Madefor Display','Wix Madefor Text',800,'28px','-.03em','uppercase','Плотные заглавные заголовки, спокойный текст. Ваш образец.'],
- ['Журнальная классика','Playfair Display + Golos Text','Playfair Display','Golos Text',600,'30px','-.01em','none','Контрастная антиква — ощущение дорогого издания.'],
- ['Строгая антиква','PT Serif + PT Sans','PT Serif','PT Sans',700,'28px','0','none','Солидно и спокойно, как у консалтинга и юристов.'],
- ['Тонкая роскошь','Cormorant Garamond + Manrope','Cormorant Garamond','Manrope',600,'34px','0','none','Изящные засечки и чистый гротеск. Премиум-сегмент.'],
- ['Маркетинговый капслок','Montserrat + Inter','Montserrat','Inter',800,'25px','-.01em','uppercase','Громкие заголовки для продающих экранов.'],
- ['Чистый минимализм','Manrope + Manrope','Manrope','Manrope',800,'29px','-.02em','none','Один шрифт на всё: аккуратно, современно, легко читать.'],
- ['Мягкая антиква','Lora + Source Sans 3','Lora','Source Sans 3',600,'29px','0','none','Тёплые засечки, дружелюбно и вдумчиво.'],
- ['Элегантная простота','Tenor Sans + Golos Text','Tenor Sans','Golos Text',400,'28px','.02em','uppercase','Лёгкие заглавные с воздухом, как у бутиков и галерей.']
-].map((f,i)=>({id:'F'+(i+1),n:f[0],pair:f[1],h:f[2],b:f[3],w:f[4],s:f[5],l:f[6],t:f[7],d:f[8]}));
+ ['Широкий геометрический','Unbounded + Golos Text','Unbounded','normal',600,'22px','-.01em','none','Golos Text','','Современный, технологичный, как у digital-агентств.'],
+ ['Плотный капслок, как у AMA Digital','Wix Madefor Display + Wix Madefor Text','Wix Madefor Display','normal',800,'23px','-.03em','uppercase','Wix Madefor Text','','Ваш образец: громко, уверенно, по-агентски.'],
+ ['Дидона — «дорогой журнал»','Prata + Manrope','Prata','normal',400,'29px','0','none','Manrope','','Контрастные засечки, как в Vogue и у премиальных брендов.'],
+ ['Тонкий курсив — люкс','Cormorant Garamond Italic + Manrope','Cormorant Garamond','italic',600,'33px','0','none','Manrope','','Изящно и спокойно, ощущение бутика и частного клуба.'],
+ ['Узкий плакатный','Oswald + Inter','Oswald','normal',600,'30px','.01em','uppercase','Inter','','Высокие сжатые буквы — динамика и напор.'],
+ ['Рукописный акцент','Golos Text + Caveat','Golos Text','normal',600,'25px','-.01em','none','Golos Text',"'Caveat',cursive",'Строгий текст, а ключевые слова — «от руки». Живо и по-человечески.'],
+ ['Моноширинный «аналитический»','IBM Plex Mono + IBM Plex Sans','IBM Plex Mono','normal',600,'22px','-.02em','none','IBM Plex Sans','','Как отчёт или терминал: данные, точность, исследование.'],
+ ['Мягкий округлый','Comfortaa + Nunito','Comfortaa','normal',700,'23px','0','none','Nunito','','Дружелюбно и легко, без официоза.'],
+ ['Тяжёлый брутальный','Dela Gothic One + Golos Text','Dela Gothic One','normal',400,'23px','0','none','Golos Text','','Очень жирные буквы, смелый характер.'],
+ ['Классическая антиква с курсивом','Playfair Display + Lora','Playfair Display','normal',600,'27px','-.01em','none','Lora',"'Playfair Display',serif;--ai:italic",'Полностью «книжная» подача: заголовки и текст с засечками.'],
+ ['Каллиграфия','Marck Script + PT Serif','Marck Script','normal',400,'31px','0','none','PT Serif','','Почерк пером — личное, тёплое впечатление.'],
+ ['Ретро-техно','Rubik Mono One + Inter','Rubik Mono One','normal',400,'19px','0','uppercase','Inter','','Широкие моноширинные заглавные, игровой характер.']
+].map((f,i)=>({id:'F'+(i+1),n:f[0],pair:f[1],h:f[2],hi:f[3],w:f[4],s:f[5],l:f[6],t:f[7],b:f[8],a:f[9],d:f[10]}));
 
 /* референсы: t — теги (a анимация, r читабельность, p дороговизна, k конкурент, c подборка, d тёмный сайт) */
 const REF=[
@@ -427,7 +434,7 @@ const rateUI=(id,n)=>`<div class="rate"><button class="rb up" type="button" data
 
 $('#pg').innerHTML=PAL.map((p,i)=>`<article class="card" data-card="${p.id}"><div class="mock" style="${vars(p.c)}"><span class="br">GOLD ANALYTICS</span><span class="hl">Узнаем, что думают ваши клиенты</span><span class="sb">Агентство исследования и анализа целевой аудитории</span><span class="tx">Находим ценную информацию о ваших клиентах, анализируем её и превращаем в решения, которые помогут увеличить продажи и прибыль.</span><span class="cta">Получить разбор проекта</span><span class="strip">1000+ глубинных интервью · 6+ лет опыта · Россия, Европа</span></div><div class="meta"><h3>${i+1}. ${p.n}</h3></div><div class="sw">${p.c.map(c=>`<i style="background:${c}" title="${c}"></i>`).join('')}</div><div class="hex">${p.c.join(' ')}<br>Контраст текста к фону ${ratio(p.c[3],p.c[0])} : 1</div><div class="meta"><button class="btn mini" type="button" data-try="${i}">Примерить на анимациях</button></div>${rateUI(p.id,p.n)}</article>`).join('');
 $$('.chips').forEach(c=>c.innerHTML=PAL.map((p,i)=>`<button class="chip" type="button" data-try="${i}" aria-pressed="false"><i style="background:${p.c[2]}"></i>${i+1}. ${p.n}</button>`).join(''));
-$('#gf').innerHTML=FONT.map(f=>`<article class="card" data-card="${f.id}"><div class="fmock" style="--fh:'${f.h}',serif;--fb:'${f.b}',sans-serif;--hw:${f.w};--hs:${f.s};--hl:${f.l};--ht:${f.t}"><span class="br">Gold Analytics</span><span class="hl">Узнаем, что <em>на самом деле</em> думают ваши клиенты</span><span class="tx">Находим ценную информацию о ваших клиентах, анализируем её и превращаем в решения, которые помогут увеличить продажи и прибыль.</span><span class="sb">1000+ глубинных интервью · 6+ лет опыта</span><span class="cta">Получить разбор проекта</span></div><div class="meta"><h3>${f.id}. ${f.n}</h3><p>${f.pair}. ${f.d}</p></div>${rateUI(f.id,f.n)}</article>`).join('');
+$('#gf').innerHTML=FONT.map(f=>`<article class="card" data-card="${f.id}"><div class="fmock" style="--fh:'${f.h}',serif;--fb:'${f.b}',sans-serif;--hi:${f.hi};--hw:${f.w};--hs:${f.s};--hl:${f.l};--ht:${f.t};${f.a?'--fa:'+f.a+(f.a.includes('Caveat')?';--as:1.35em;--aw:700':''):''}"><span class="aa" aria-hidden="true">Аа</span><span class="br">Gold Analytics</span><span class="hl">Узнаем, что <em>на самом деле</em> думают ваши клиенты</span><span class="tx">Находим ценную информацию о ваших клиентах, анализируем её и превращаем в решения, которые помогут увеличить продажи и прибыль.</span><span class="sb">1000+ глубинных интервью · 6+ лет опыта</span><span class="cta">Получить разбор проекта</span></div><div class="meta"><h3>${f.id}. ${f.n}</h3><p>${f.pair}. ${f.d}</p></div>${rateUI(f.id,f.n)}</article>`).join('');
 const card=a=>`<article class="card" data-card="${a.id}"><div class="stage ${a.cls||''}" id="s-${a.id}">${a.h}</div><div class="meta"><h3>${a.id}. ${a.n}</h3><p>${a.d}</p>${a.c?'<span class="badge">Есть у конкурента</span>':''}</div>${rateUI(a.id,a.n)}</article>`;
 $('#gt').innerHTML=ANIM.filter(a=>a.g==='t').map(card).join('');
 $('#go').innerHTML=ANIM.filter(a=>a.g==='o').map(card).join('');
