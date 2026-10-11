@@ -416,9 +416,7 @@ const REF=[
  ['Студия Артемия Лебедева','https://www.artlebedev.ru/','r',['Русская типографика и читабельность','Простая навигация по большому портфолио','Пример: важен текст, а не эффекты']],
  ['Nielsen Norman Group','https://www.nngroup.com/','r',['Исследовательские тексты, которые легко читать','Ширина строки, подзаголовки, списки','Ориентир для статей и кейсов исследований']],
  ['Bain & Company','https://www.bain.com/','rp',['Консалтинг: строго, дорого, доверительно','Цифры и выводы исследований на первом плане','Спокойная анимация без перегруза']],
- ['Framer','https://www.framer.com/','ap',['Появления, параллакс, интерактивные блоки','Плотная динамика без потери читаемости','Хорошие примеры микроанимаций']],
- ['GSAP Showcase','https://gsap.com/showcase/','ac',['Подборка сайтов с лучшими анимациями','На этой библиотеке делаются эффекты из этого теста']],
- ['Awwwards: анимация','https://www.awwwards.com/websites/animation/','ac',['Подборка сайтов-победителей по анимации','Удобно листать и отмечать понравившееся']]
+ ['Framer','https://www.framer.com/','ap',['Появления, параллакс, интерактивные блоки','Плотная динамика без потери читаемости','Хорошие примеры микроанимаций']]
 ].map((x,i)=>({id:'R'+(i+1),n:x[0],u:x[1],t:x[2],l:x[3]}));
 const TAG={k:'Конкурент',a:'Анимация',r:'Читабельность',p:'Дорого',c:'Подборка',d:'Тёмный сайт'};
 
@@ -439,7 +437,7 @@ $('#go').innerHTML=ANIM.filter(a=>a.g==='o').map(card).join('');
 let curPal=0;
 const host=u=>u.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,'');
 $('#gr').innerHTML=REF.map(x=>`<article class="card ref" data-card="${x.id}" data-t="${x.t}"><a class="shot" href="${x.u}" target="_blank" rel="noopener" aria-label="Открыть ${x.n}" style="background-image:url('https://s.wordpress.com/mshots/v1/${encodeURIComponent(x.u)}?w=800&h=500')"></a><div class="meta"><div class="tags">${[...x.t].map(k=>`<span class="tag${k==='k'?' k':''}">${TAG[k]}</span>`).join('')}</div><h3>${x.id}. ${x.n}</h3><ul class="look">${x.l.map(t=>`<li>${t}</li>`).join('')}</ul><a class="open" href="${x.u}" target="_blank" rel="noopener">${host(x.u)} ↗</a></div>${rateUI(x.id,x.n)}</article>`).join('');
-$('.filters').innerHTML=[['','Все'],['a','Анимация'],['r','Читабельность'],['p','Дорого'],['c','Подборки']].map((f,i)=>`<button class="chip" type="button" data-f="${f[0]}" aria-pressed="${!i}">${f[1]}</button>`).join('');
+$('.filters').innerHTML=[['','Все'],['a','Анимация'],['r','Читабельность'],['p','Дорого']].map((f,i)=>`<button class="chip" type="button" data-f="${f[0]}" aria-pressed="${!i}">${f[1]}</button>`).join('');
 $('.filters').onclick=e=>{const b=e.target.closest('[data-f]');if(!b)return;$$('.filters .chip').forEach(c=>c.setAttribute('aria-pressed',c===b));$$('#gr .ref').forEach(c=>c.hidden=!!b.dataset.f&&!c.dataset.t.includes(b.dataset.f))};
 $('#rl').innerHTML=REF.map(x=>`<li><a href="${x.u}" target="_blank" rel="noopener">${x.n}</a> — ${x.l[0]}</li>`).join('');
 
