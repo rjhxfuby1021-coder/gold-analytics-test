@@ -227,7 +227,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 
   <section class="sec" id="refs">
     <h2>5. Референсы</h2>
-    <p class="lead">Сайты, на которые можно ориентироваться по движению, читаемости и ощущению дороговизны. Главный ориентир — сайт конкурента AMA Digital. Откройте интересные, оцените пальцем и напишите, что именно понравилось.</p>
+    <p class="lead">Сайты, на которые можно ориентироваться по движению, читаемости и ощущению дороговизны. Откройте интересные, оцените пальцем и напишите, что именно понравилось.</p>
     <div class="filters" role="group" aria-label="Фильтр референсов"></div>
     <div class="grid" id="gr"></div>
   </section>
@@ -387,7 +387,7 @@ const ANIM=[
 /* пары шрифтов: заголовок / текст; w — насыщенность, s — размер, l — трекинг, t — регистр */
 const FONT=[
  ['Широкий геометрический','Unbounded + Golos Text','Unbounded','normal',600,'22px','-.01em','none','Golos Text','','Современный, технологичный, как у digital-агентств.'],
- ['Плотный капслок, как у AMA Digital','Wix Madefor Display + Wix Madefor Text','Wix Madefor Display','normal',800,'23px','-.03em','uppercase','Wix Madefor Text','','Ваш образец: громко, уверенно, по-агентски.'],
+ ['Плотный капслок','Wix Madefor Display + Wix Madefor Text','Wix Madefor Display','normal',800,'23px','-.03em','uppercase','Wix Madefor Text','','Громко, уверенно, по-агентски.'],
  ['Дидона — «дорогой журнал»','Prata + Manrope','Prata','normal',400,'29px','0','none','Manrope','','Контрастные засечки, как в Vogue и у премиальных брендов.'],
  ['Тонкий курсив — люкс','Cormorant Garamond Italic + Manrope','Cormorant Garamond','italic',600,'33px','0','none','Manrope','','Изящно и спокойно, ощущение бутика и частного клуба.'],
  ['Узкий плакатный','Oswald + Inter','Oswald','normal',600,'30px','.01em','uppercase','Inter','','Высокие сжатые буквы — динамика и напор.'],
@@ -402,7 +402,6 @@ const FONT=[
 
 /* референсы: t — теги (a анимация, r читабельность, p дороговизна, k конкурент, c подборка, d тёмный сайт) */
 const REF=[
- ['AMA Digital','https://amadigital.agency/','akp',['Главный ориентир: белый фон, огромные заглавные заголовки, синий акцент','Счётчики, бегущие строки, карусели, раскрывающиеся вопросы','Крупные скруглённые карточки и плотная сетка']],
  ['Cuberto','https://cuberto.com/','ap',['Кнопки «магнитятся» к курсору, свой курсор','Плавные переходы между страницами','Видео и крупная типографика в кейсах']],
  ['Locomotive','https://locomotive.ca/','arp',['Плавная прокрутка (их же библиотека Locomotive Scroll)','Текст и картинки появляются при прокрутке','Много воздуха, спокойная светлая подача']],
  ['Obys Agency','https://obys.agency/','ap',['Заставка при загрузке','Заголовки выезжают построчно','Кинетическая типографика']],
@@ -418,8 +417,6 @@ const REF=[
  ['Nielsen Norman Group','https://www.nngroup.com/','r',['Исследовательские тексты, которые легко читать','Ширина строки, подзаголовки, списки','Ориентир для статей и кейсов исследований']],
  ['Bain & Company','https://www.bain.com/','rp',['Консалтинг: строго, дорого, доверительно','Цифры и выводы исследований на первом плане','Спокойная анимация без перегруза']],
  ['Framer','https://www.framer.com/','ap',['Появления, параллакс, интерактивные блоки','Плотная динамика без потери читаемости','Хорошие примеры микроанимаций']],
- ['Lusion','https://lusion.co/','ad',['3D и WebGL-интерактив','Тёмный сайт: смотрим только на движение','Пример «вау-эффекта» — дорого в разработке']],
- ['Unseen Studio','https://unseen.co/','ad',['Плавные переходы и интерактивный фон','Тёмный сайт: смотрим только на движение','Ощущение премиальной студии']],
  ['GSAP Showcase','https://gsap.com/showcase/','ac',['Подборка сайтов с лучшими анимациями','На этой библиотеке делаются эффекты из этого теста']],
  ['Awwwards: анимация','https://www.awwwards.com/websites/animation/','ac',['Подборка сайтов-победителей по анимации','Удобно листать и отмечать понравившееся']]
 ].map((x,i)=>({id:'R'+(i+1),n:x[0],u:x[1],t:x[2],l:x[3]}));
@@ -442,7 +439,7 @@ $('#go').innerHTML=ANIM.filter(a=>a.g==='o').map(card).join('');
 let curPal=0;
 const host=u=>u.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,'');
 $('#gr').innerHTML=REF.map(x=>`<article class="card ref" data-card="${x.id}" data-t="${x.t}"><a class="shot" href="${x.u}" target="_blank" rel="noopener" aria-label="Открыть ${x.n}" style="background-image:url('https://s.wordpress.com/mshots/v1/${encodeURIComponent(x.u)}?w=800&h=500')"></a><div class="meta"><div class="tags">${[...x.t].map(k=>`<span class="tag${k==='k'?' k':''}">${TAG[k]}</span>`).join('')}</div><h3>${x.id}. ${x.n}</h3><ul class="look">${x.l.map(t=>`<li>${t}</li>`).join('')}</ul><a class="open" href="${x.u}" target="_blank" rel="noopener">${host(x.u)} ↗</a></div>${rateUI(x.id,x.n)}</article>`).join('');
-$('.filters').innerHTML=[['','Все'],['k','Конкурент'],['a','Анимация'],['r','Читабельность'],['p','Дорого'],['c','Подборки']].map((f,i)=>`<button class="chip" type="button" data-f="${f[0]}" aria-pressed="${!i}">${f[1]}</button>`).join('');
+$('.filters').innerHTML=[['','Все'],['a','Анимация'],['r','Читабельность'],['p','Дорого'],['c','Подборки']].map((f,i)=>`<button class="chip" type="button" data-f="${f[0]}" aria-pressed="${!i}">${f[1]}</button>`).join('');
 $('.filters').onclick=e=>{const b=e.target.closest('[data-f]');if(!b)return;$$('.filters .chip').forEach(c=>c.setAttribute('aria-pressed',c===b));$$('#gr .ref').forEach(c=>c.hidden=!!b.dataset.f&&!c.dataset.t.includes(b.dataset.f))};
 $('#rl').innerHTML=REF.map(x=>`<li><a href="${x.u}" target="_blank" rel="noopener">${x.n}</a> — ${x.l[0]}</li>`).join('');
 
