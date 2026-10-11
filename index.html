@@ -1,0 +1,409 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Тест дизайна Gold Analytics</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Unbounded:wght@400;600&display=swap">
+<style>
+/* Layout: нейтральный «лист опросника»; цвет живёт только внутри карточек палитр и сцен анимации */
+:root{
+  --bg:#EEF0F3;--card:#FFFFFF;--ink:#14161B;--sub:#5C626E;--line:#D9DDE3;
+  --good:#1F8A4C;--good-bg:#DDF2E5;--bad:#C4372B;--bad-bg:#FBE3E0;--focus:#2F5BEA;--note:#F6EBCB;--note-ink:#5E4708;
+  --f-display:"Unbounded","Arial Black",Arial,sans-serif;
+  --f-body:"Golos Text","Segoe UI",Arial,sans-serif;
+  --f-mono:"JetBrains Mono",Consolas,monospace;
+  --e:cubic-bezier(.2,.8,.2,1);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111318;--card:#1A1D24;--ink:#ECEEF2;--sub:#9AA1AD;--line:#2C313B;--good:#4CC47F;--good-bg:#173524;--bad:#F0786C;--bad-bg:#3B1D1A;--focus:#8FA8FF;--note:#3A3013;--note-ink:#F1DC9A;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111318;--card:#1A1D24;--ink:#ECEEF2;--sub:#9AA1AD;--line:#2C313B;--good:#4CC47F;--good-bg:#173524;--bad:#F0786C;--bad-bg:#3B1D1A;--focus:#8FA8FF;--note:#3A3013;--note-ink:#F1DC9A;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--f-body);padding-inline:16px}
+.wrap{max-width:1120px;margin:0 auto;padding-block:28px 64px;display:flex;flex-direction:column;gap:36px}
+h1{font:600 clamp(24px,4vw,38px)/1.15 var(--f-display);margin:0;text-wrap:balance}
+h2{font:600 clamp(18px,2.6vw,24px)/1.2 var(--f-display);margin:0;text-wrap:balance}
+h3{font:600 16px/1.3 var(--f-body);margin:0}
+p{margin:0}
+.lead{color:var(--sub);max-width:65ch}
+.head{display:flex;flex-direction:column;gap:12px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--sub)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);padding-block:10px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--line)}
+.bar .track{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar .fill{height:100%;width:0;background:var(--ink);transition:width .4s var(--e)}
+.bar span{font:500 13px/1 var(--f-mono);white-space:nowrap}
+.sec{display:flex;flex-direction:column;gap:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.card.up{border-color:var(--good)}.card.dn{border-color:var(--bad)}
+.meta{padding:14px 16px 0;display:flex;flex-direction:column;gap:6px}
+.meta p{color:var(--sub);font-size:14px}
+.badge{align-self:flex-start;font:500 11px/1 var(--f-mono);padding:5px 8px;border-radius:4px;background:var(--note);color:var(--note-ink)}
+.rate{padding:12px 16px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:auto}
+.rb{width:44px;height:40px;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--sub);cursor:pointer;display:grid;place-items:center;transition:transform .15s,background .15s}
+.rb:hover{transform:translateY(-1px);color:var(--ink)}
+.rb svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.rb.dn svg{transform:rotate(180deg)}
+.rb.up[aria-pressed="true"]{background:var(--good-bg);color:var(--good);border-color:var(--good)}
+.rb.dn[aria-pressed="true"]{background:var(--bad-bg);color:var(--bad);border-color:var(--bad)}
+input[type=text],textarea{font:400 14px/1.4 var(--f-body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%}
+.rate input{flex:1 1 150px;min-width:0;height:40px}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.btn{font:500 14px/1 var(--f-body);padding:10px 14px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.btn:hover{border-color:var(--ink)}
+.mini{font-size:13px;padding:8px 10px}
+/* palette mock */
+.mock,.stage{background:var(--pb);color:var(--pt);font-family:var(--f-body)}
+.mock{padding:18px 16px 0;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.mock .br{font:500 11px/1 var(--f-mono);letter-spacing:.14em;color:var(--pa)}
+.mock .hl{font:600 17px/1.25 var(--f-display)}
+.mock .sb{font-size:13px;color:var(--pm)}
+.mock .tx{font-size:15px;line-height:1.55}
+.mock .cta{background:var(--pa);color:var(--po);font:500 13px/1 var(--f-body);padding:9px 14px;border-radius:6px}
+.mock .strip{align-self:stretch;margin-inline:-16px;background:var(--ps);color:var(--pm);font-size:12px;padding:8px 16px;white-space:nowrap;overflow:hidden}
+.sw{display:flex;gap:6px;flex-wrap:wrap;padding:12px 16px 0}
+.sw i{flex:1 1 44px;min-width:44px;height:30px;border-radius:6px;border:1px solid var(--line)}
+.hex{padding:6px 16px 0;font:400 11px/1.6 var(--f-mono);color:var(--sub);word-spacing:4px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:500 12px/1 var(--f-body);padding:7px 10px;border-radius:20px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:6px}
+.chip i{width:12px;height:12px;border-radius:50%;border:1px solid var(--line)}
+.chip[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+/* stage */
+.stage{position:relative;height:190px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center}
+.stage .big{font:600 20px/1.25 var(--f-display)}
+.stage .acc{color:var(--pa)}
+.stage .mut{color:var(--pm);font-size:13px}
+.sbtn{background:var(--pa);color:var(--po);border:0;border-radius:8px;font:500 14px/1 var(--f-body);padding:12px 18px;cursor:pointer}
+@keyframes up{from{transform:translateY(110%)}to{transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes fup{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes fl{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+@keyframes fr{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+@keyframes zm{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes mq{to{transform:translateX(-50%)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.d-lines span{display:block;overflow:hidden}.d-lines i{display:block;font-style:normal}
+.run .d-lines i{animation:up .8s var(--e) both;animation-delay:calc(var(--i)*.14s)}
+.tw::after{content:"";display:inline-block;width:2px;height:1em;background:var(--pa);margin-left:3px;vertical-align:-2px;animation:fade .5s steps(1) infinite alternate}
+.rw{display:inline-block;color:var(--pa)}.rw.in{animation:fup .45s var(--e) both}
+.d-let b{display:inline-block;font:600 18px/1 var(--f-display);opacity:0}
+.run .d-let b{animation:let .6s var(--e) both;animation-delay:calc(var(--i)*.05s)}
+@keyframes let{from{opacity:0;transform:translateY(20px) rotate(12deg)}to{opacity:1;transform:none}}
+.d-fill{font:600 19px/1.3 var(--f-display);background:linear-gradient(90deg,var(--pa) 50%,var(--pm) 50%) 100% 0/200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+.run .d-fill{animation:fillx 2.2s linear both}@keyframes fillx{to{background-position:0 0}}
+.nums{display:flex;gap:22px;flex-wrap:wrap;justify-content:center}.nums div{display:flex;flex-direction:column;gap:4px}
+.nums b{font:600 24px/1 var(--f-display);color:var(--pa);font-variant-numeric:tabular-nums}
+.od b{display:inline-block;height:1em;overflow:hidden;line-height:1;font:600 34px/1 var(--f-display);color:var(--pa)}
+.od b i{display:block;font-style:normal;line-height:1}
+.run .od b i{animation:od 1.6s var(--e) both;animation-delay:calc(var(--i)*.1s)}@keyframes od{to{transform:translateY(calc(var(--d)*-1em))}}
+.mqw{position:absolute;left:0;right:0;overflow:hidden;white-space:nowrap;padding:10px 0;background:var(--ps)}
+.mqw div{display:inline-block;animation:mq 16s linear infinite;font:500 14px/1 var(--f-body)}
+.mqw.rev div{animation-direction:reverse}.mqw.a{background:var(--pa);color:var(--po)}
+.mqw:hover div{animation-play-state:paused}
+.ul{position:relative;white-space:nowrap}.ul svg{position:absolute;left:0;bottom:-8px;width:100%;height:10px;overflow:visible}
+.ul path{fill:none;stroke:var(--pa);stroke-width:3;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.run .ul path{animation:draw 1s .5s var(--e) forwards}@keyframes draw{to{stroke-dashoffset:0}}
+.basic{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.basic span,.tile{background:var(--ps);border-radius:8px;padding:12px 14px;font-size:13px}
+.run .basic span{animation:var(--k) .7s var(--e) both;animation-delay:calc(var(--i)*.35s)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:300px}
+.run .tiles .tile{animation:fup .6s var(--e) both;animation-delay:calc(var(--i)*.15s)}
+.tilt{background:var(--ps);border-radius:12px;padding:22px 26px;border:1px solid var(--pa);transition:transform .2s;animation:sway 4s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:perspective(600px) rotateY(-12deg) rotateX(5deg)}50%{transform:perspective(600px) rotateY(12deg) rotateX(-5deg)}}
+.flip{width:210px;height:110px;perspective:700px;cursor:pointer;background:none;border:0;padding:0;color:inherit;font:inherit}
+.flip div{position:relative;width:100%;height:100%;transition:transform .7s var(--e);transform-style:preserve-3d}
+.flip.on div{transform:rotateY(180deg)}
+.flip span{position:absolute;inset:0;display:grid;place-items:center;border-radius:12px;backface-visibility:hidden;padding:10px;background:var(--ps)}
+.flip span+span{transform:rotateY(180deg);background:var(--pa);color:var(--po);font-size:14px}
+.mag{transition:transform .25s var(--e)}
+.cur{cursor:none}.cur .dot,.cur .ring{position:absolute;left:0;top:0;border-radius:50%;pointer-events:none}
+.cur .dot{width:8px;height:8px;margin:-4px;background:var(--pa)}.cur .ring{width:36px;height:36px;margin:-18px;border:1.5px solid var(--pa);opacity:.6}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%}
+.plx i{position:absolute;border-radius:50%;transition:transform .15s linear}
+.chart{width:100%;max-width:320px;height:130px;overflow:visible}
+.chart path{fill:none;stroke:var(--pa);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+.chart circle{fill:var(--pa);opacity:0}.chart line{stroke:var(--ps);stroke-width:1}
+.run .chart path{animation:draw 1.8s var(--e) forwards}.run .chart circle{animation:fade .3s forwards;animation-delay:calc(var(--i)*.4s + .3s)}
+.segs{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;width:100%;max-width:320px}
+.segs i{height:22px;border-radius:3px;background:var(--ps)}
+.run .segs i{animation:seg .3s forwards;animation-delay:calc(var(--i)*.12s)}@keyframes seg{to{background:var(--pa)}}
+.col{display:flex;flex-direction:column;gap:10px;align-items:center;width:100%}
+.acc-l{width:100%;max-width:330px;text-align:left;display:flex;flex-direction:column;gap:6px}
+.acc-l button{width:100%;text-align:left;background:var(--ps);color:var(--pt);border:0;border-radius:8px;padding:9px 12px;font:500 13px/1.3 var(--f-body);cursor:pointer;display:flex;justify-content:space-between;gap:8px}
+.acc-l button::after{content:"+";color:var(--pa);transition:transform .3s}.acc-l .op button::after{transform:rotate(45deg)}
+.acc-l .ans{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--e)}.acc-l .op .ans{grid-template-rows:1fr}
+.acc-l .ans p{overflow:hidden;font-size:12px;color:var(--pm);padding-inline:12px}
+.car{width:100%;max-width:300px;overflow:hidden;border-radius:10px}.car .tr{display:flex;transition:transform .6s var(--e)}
+.car .tr div{flex:0 0 100%;background:var(--ps);padding:26px 12px;font:600 15px/1.2 var(--f-display)}
+.nav{display:flex;gap:8px;align-items:center}.nav button{width:32px;height:32px;border-radius:50%;border:1px solid var(--pa);background:none;color:var(--pa);cursor:pointer;font-size:16px}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
+.tabs button{background:none;border:1px solid var(--ps);color:var(--pm);border-radius:20px;padding:6px 10px;font:500 12px/1 var(--f-body);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--pa);color:var(--po);border-color:var(--pa)}
+.tabp{font-size:13px;max-width:300px;min-height:40px}.tabp.in{animation:fup .4s var(--e) both}
+.star{width:64px;height:64px;fill:var(--pa);animation:spin 9s linear infinite}.star.s2{width:30px;height:30px;animation-duration:5s;animation-direction:reverse;fill:var(--pm)}
+.logos span{display:inline-block;margin-inline:8px;padding:8px 14px;border:1px solid var(--pm);border-radius:6px;color:var(--pm);transition:color .2s,border-color .2s}
+.logos span:hover{color:var(--pa);border-color:var(--pa)}.mqw.logos{background:none}
+.ov{position:absolute;inset:0;background:rgba(0,0,0,.55);display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.ov.open{opacity:1;pointer-events:auto}
+.ov .box{background:var(--pt);color:var(--pb);border-radius:12px;padding:14px;width:220px;text-align:left;transform:scale(.8) translateY(20px);transition:transform .4s var(--e);display:flex;flex-direction:column;gap:6px;font-size:13px}
+.ov.open .box{transform:none}.ov .fld{height:26px;border-radius:5px;border:1px solid currentColor;opacity:.35}
+.ov .x{align-self:flex-end;background:none;border:0;color:inherit;cursor:pointer;font-size:16px;line-height:1}
+.scr{position:absolute;inset:0;overflow-y:auto;text-align:left}
+.scr header{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:16px 14px;transition:padding .3s,background .3s;font:500 12px/1 var(--f-mono);letter-spacing:.1em}
+.scr header.sm{padding:8px 14px;background:var(--ps)}
+.scr header u{position:absolute;left:0;bottom:0;height:2px;background:var(--pa);width:0;text-decoration:none}
+.scr p{padding:14px;color:var(--pm);font-size:13px;height:120px}
+.fillb{position:relative;overflow:hidden;background:none;border:1.5px solid var(--pa);color:var(--pa);border-radius:8px;padding:12px 20px;font:500 14px/1 var(--f-body);cursor:pointer;transition:color .35s;z-index:0}
+.fillb::before{content:"";position:absolute;inset:0;background:var(--pa);transform:translateY(101%);transition:transform .35s var(--e);z-index:-1}
+.fillb:hover,.fillb.on{color:var(--po)}.fillb:hover::before,.fillb.on::before{transform:none}
+.chk{display:flex;flex-direction:column;gap:5px;text-align:left;font-size:13px}.chk label{display:flex;gap:8px;align-items:center;cursor:pointer}
+.chk input{accent-color:var(--pa);width:16px;height:16px}
+.rng{width:100%;max-width:280px;accent-color:var(--pa)}
+.lift{display:flex;gap:8px}.lift div{background:var(--ps);border:1px solid transparent;border-radius:10px;padding:16px 12px;font-size:13px;transition:transform .3s var(--e),border-color .3s}
+.lift div:hover,.lift div.hv{transform:translateY(-8px);border-color:var(--pa)}
+.pre{position:absolute;inset:0;background:var(--pa);color:var(--po);display:grid;place-items:center;z-index:2}
+.run .pre{animation:lift .7s 1.6s var(--e) forwards}@keyframes lift{to{transform:translateY(-101%)}}
+/* send */
+.send{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.send textarea{min-height:170px;font:400 12px/1.5 var(--f-mono);resize:vertical}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.go{display:inline-block;background:var(--ink);color:var(--bg);font:600 16px/1 var(--f-body);padding:16px 22px;border-radius:10px;text-decoration:none}
+.go:hover{opacity:.88}
+.err{color:var(--bad);font-size:14px}.ok{color:var(--good);font-size:14px}
+@media (prefers-reduced-motion:reduce){.mqw div,.star,.tilt{animation-duration:60s}}
+</style>
+
+<div class="wrap">
+  <div class="head">
+    <span class="eyebrow">Gold Analytics · выбор стиля сайта</span>
+    <h1>Что вам нравится: цвета и движение</h1>
+    <p class="lead">Отметьте пальцем вверх то, что хотите видеть на сайте, и пальцем вниз то, что не подходит. К любому пункту можно дописать комментарий. В конце нажмите «Отправить результаты» — ответы уйдут разработчику в Telegram.</p>
+    <input type="text" id="client" placeholder="Ваше имя" aria-label="Ваше имя" style="max-width:320px">
+  </div>
+
+  <div class="bar" aria-live="polite"><div class="track"><div class="fill" id="fill"></div></div><span id="cnt">0 из 0</span></div>
+
+  <section class="sec" id="palettes">
+    <h2>1. Цветовые гаммы</h2>
+    <p class="lead">Десять светлых вариантов на одном и том же первом экране, с абзацем обычного текста для оценки читаемости. Кнопка «Примерить» перекрашивает все анимации ниже в выбранную гамму.</p>
+    <div class="grid" id="pg"></div>
+  </section>
+
+  <section class="sec" id="anims">
+    <h2>2. Анимация текста</h2>
+    <p class="lead">Движение повторяется само. Там, где написано «наведите» или «нажмите», попробуйте сами.</p>
+    <div class="chips" id="chips" role="group" aria-label="Гамма для примерки"></div>
+    <div class="grid" id="gt"></div>
+    <h2 style="margin-top:20px">3. Анимация объектов</h2>
+    <div class="grid" id="go"></div>
+  </section>
+
+  <section class="send" id="send">
+    <h2>Отправить результаты</h2>
+    <p class="lead">Нажмите кнопку — ответы сразу придут разработчику. Ничего устанавливать и открывать не нужно.</p>
+    <textarea id="out" readonly aria-label="Текст результатов"></textarea>
+    <div class="row">
+      <a class="go" id="sendLink" href="https://t.me/PavelTexSpec" target="_blank" rel="noopener">Отправить результаты</a>
+      <button class="btn" id="copy" type="button">Скопировать текст</button>
+    </div>
+    <p id="status" role="status"></p>
+  </section>
+</div>
+
+<script>
+/* ===== Настройки отправки =====
+   По умолчанию кнопка открывает чат t.me/TG_USER с готовым текстом.
+   Если страница лежит на собственном хостинге, можно вписать токен бота и chat_id:
+   тогда сообщение уйдёт автоматически, без открытия Telegram у клиента. */
+const TG_USER='PavelTexSpec';
+/* тот же воркер, что принимает заявки с сайта: токен бота хранится в нём, а не здесь */
+const FORM_ENDPOINT='https://texspeckps-form.texspeckps.workers.dev';
+
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const THUMB='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.3a2 2 0 0 0 2-1.7l1.4-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>';
+
+const PAL=[
+ ['Крем и терракота, как в кейсе вебинара','#F5F1EA','#FFFFFF','#A84A34','#2A2A2A','#5F5A54'],
+ ['Крем, тёмно-синий и бордо','#F3EFE6','#FFFFFF','#7A1F2B','#1B2A4A','#555B6B'],
+ ['Белый и тёмное золото','#FFFFFF','#F4F1EA','#8A6410','#14161B','#55524B'],
+ ['Небесный и синий','#EAF2FB','#FFFFFF','#1D4FB8','#101828','#4E5A70'],
+ ['Мята и изумруд','#E8F3EC','#FFFFFF','#0F6B4F','#10201A','#4B5F57'],
+ ['Пудровый и графит','#F7ECE8','#FFF8F5','#2B2B33','#2B2B33','#6A5B5A'],
+ ['Лаванда и фиолет','#F1EEFA','#FFFFFF','#5B3CC4','#17142B','#58546F'],
+ ['Светло-серый и оранжевый','#F2F3F5','#FFFFFF','#AD4500','#16181D','#585C66'],
+ ['Оливковый и травяной','#F1F0E4','#FBFAF2','#5C6B1E','#23260F','#5C5F47'],
+ ['Строгий чёрно-белый','#FFFFFF','#F2F2F2','#111111','#111111','#555555']
+].map((p,i)=>({id:'P'+(i+1),n:p[0],c:p.slice(1)}));
+const lum=h=>{const a=[1,3,5].map(i=>{const v=parseInt(h.substr(i,2),16)/255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*a[0]+.7152*a[1]+.0722*a[2]};
+const ratio=(a,b)=>{const x=lum(a),y=lum(b);return ((Math.max(x,y)+.05)/(Math.min(x,y)+.05)).toFixed(1).replace('.',',')};
+const on=h=>{const [r,g,b]=[1,3,5].map(i=>parseInt(h.substr(i,2),16));return (r*299+g*587+b*114)/1000>150?'#14161B':'#FFFFFF'};
+const vars=c=>`--pb:${c[0]};--ps:${c[1]};--pa:${c[2]};--pt:${c[3]};--pm:${c[4]};--po:${on(c[2])}`;
+
+const sp=(t,tag='b')=>[...t].map((ch,i)=>`<${tag} style="--i:${i}">${ch===' '?'&nbsp;':ch}</${tag}>`).join('');
+const MQ1='6+ лет опыта в маркетинге, PR и продвижении · Россия, Европа, Латинская Америка · 1000+ глубинных интервью · ';
+const MQ2='«Дорого» · «Подумаю» · «Не сейчас» · Мы определим истинные причины этих возражений · ';
+const STAR='<path d="M32 0l6 26 26 6-26 6-6 26-6-26L0 32l26-6z"/>';
+const TABS={'Маркетинг':'Позиционирование, оффер, сайт, реклама, контент, креативы, упаковка.','Продажи':'Аргументация, скрипты, работа с возражениями, этапы коммуникации с клиентом.','Продукт':'Цена, продуктовая линейка, новые услуги, комплектация и развитие продукта.','Клиентский путь':'Точки потери клиентов, сервис, коммуникации, повторные продажи.'};
+const tm=(el,fn,ms,rep)=>{(el._t=el._t||[]).push(rep?setInterval(fn,ms):setTimeout(fn,ms))};
+const ticks=[];
+const ptr=(el,fn,out)=>{el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();el._in=1;fn((e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height,r)});el.addEventListener('pointerleave',()=>{el._in=0;out&&out()})};
+
+/* c:1 — приём найден в коде сайта конкурента amadigital.agency */
+const ANIM=[
+ {id:'T1',g:'t',n:'Заголовок выезжает построчно',d:'Строки поднимаются одна за другой. Подходит для главных заголовков экранов.',
+  h:`<div class="d-lines big"><span><i style="--i:0">Узнаем, что на самом деле</i></span><span><i style="--i:1">думают ваши клиенты</i></span><span><i style="--i:2" class="acc">и что влияет на их выбор</i></span></div>`},
+ {id:'T2',g:'t',n:'Печатающийся текст',d:'Фраза набирается по буквам, как в чате. Хорошо для экрана про ИИ.',
+  h:`<div class="big"><span class="tw"></span></div>`,
+  play(el){const s=$('.tw',el),t='Ответы на все ваши вопросы находятся у ваших клиентов';let i=0;s.textContent='';tm(el,()=>{if(i<t.length)s.textContent=t.slice(0,++i)},45,1)}},
+ {id:'T3',g:'t',n:'Сменяющееся слово',d:'Одно слово в заголовке меняется, остальная фраза стоит на месте.',loop:0,
+  h:`<div class="big">Что скрывается за словом<br><span class="rw in">«Дорого»</span></div>`,
+  init(el){const w=['«Дорого»','«Подумаю»','«Не сейчас»'],s=$('.rw',el);let i=0;setInterval(()=>{if(!el._vis)return;s.textContent=w[++i%3];s.classList.remove('in');void s.offsetWidth;s.classList.add('in')},1700)}},
+ {id:'T4',g:'t',n:'Буквы появляются по одной',d:'Каждая буква встаёт на место с лёгким поворотом. Для логотипа и коротких слов.',
+  h:`<div class="d-let acc">${sp('GOLD ANALYTICS')}</div>`},
+ {id:'T5',g:'t',n:'Текст заливается цветом',d:'Фраза постепенно закрашивается акцентным цветом, на сайте это привязывается к прокрутке.',
+  h:`<div class="d-fill">Исследуем, чтобы понимать. Анализируем, чтобы действовать.</div>`},
+ {id:'T6',g:'t',c:1,n:'Счётчик цифр',d:'Цифры быстро набегают от нуля до значения, когда блок попадает на экран.',
+  h:`<div class="nums"><div><b class="cn" data-to="1000" data-s="+">0</b><span class="mut">интервью</span></div><div><b class="cn" data-to="6" data-s="+">0</b><span class="mut">лет опыта</span></div><div><b class="cn" data-to="290000" data-s=" ₽">0</b><span class="mut">стоимость от</span></div></div>`,
+  play(el){const t0=performance.now();$$('.cn',el).forEach(b=>{const to=+b.dataset.to;(function f(t){const k=Math.min(1,(t-t0)/1500),v=Math.round(to*(1-Math.pow(1-k,3)));b.textContent=v.toLocaleString('ru-RU')+b.dataset.s;if(k<1&&el._vis)requestAnimationFrame(f);else b.textContent=to.toLocaleString('ru-RU')+b.dataset.s})(t0)})}},
+ {id:'T7',g:'t',c:1,n:'Цифры-барабан',d:'Каждая цифра прокручивается, как на механическом табло.',
+  h:`<div class="col"><div class="od">${[...'1000'].map((d,i)=>`<b><i style="--d:${d};--i:${i}">${[0,1,2,3,4,5,6,7,8,9].join('<br>')}</i></b>`).join('')}<b style="height:auto">+</b></div><span class="mut">глубинных интервью</span></div>`},
+ {id:'T8',g:'t',c:1,n:'Бегущая строка',d:'Текст едет бесконечной лентой и останавливается при наведении.',loop:0,
+  h:`<div class="mqw"><div>${MQ1.repeat(2)}</div></div>`},
+ {id:'T9',g:'t',n:'Две ленты навстречу друг другу',d:'Строки едут в разные стороны, вторая выделена акцентным цветом.',loop:0,
+  h:`<div class="mqw" style="top:46px"><div>${MQ1.repeat(2)}</div></div><div class="mqw rev a" style="top:100px"><div>${MQ2.repeat(3)}</div></div>`},
+ {id:'T10',g:'t',n:'Слово подчёркивается маркером',d:'Под ключевым словом рисуется линия от руки.',
+  h:`<div class="big">Ваши клиенты покупают<br>не продукт, а <span class="ul acc">результат<svg viewBox="0 0 100 10" preserveAspectRatio="none"><path pathLength="1" d="M2 6 Q25 1 50 6 T98 5"/></svg></span></div>`},
+ {id:'T11',g:'t',c:1,n:'Базовые появления Tilda',d:'Пять стандартных эффектов платформы: проявление, снизу, слева, справа, увеличение.',
+  h:`<div class="basic">${[['Проявление','fade'],['Снизу','fup'],['Слева','fl'],['Справа','fr'],['Увеличение','zm']].map((a,i)=>`<span style="--k:${a[1]};--i:${i}">${a[0]}</span>`).join('')}</div>`},
+
+ {id:'O1',g:'o',n:'Карточки появляются по очереди',d:'Блоки встают на место один за другим, а не все разом.',
+  h:`<div class="tiles">${Object.keys(TABS).map((t,i)=>`<div class="tile" style="--i:${i}">${t}</div>`).join('')}</div>`},
+ {id:'O2',g:'o',n:'Карточка наклоняется за курсором',d:'Наведите: плитка поворачивается в объёме вслед за мышью.',loop:0,
+  h:`<div class="tilt">Недвижимость<br><span class="mut">и строительство</span></div>`,
+  init(el){const c=$('.tilt',el);ptr(el,(x,y)=>{c.style.animation='none';c.style.transform=`perspective(600px) rotateY(${(x-.5)*30}deg) rotateX(${(.5-y)*30}deg)`},()=>{c.style.animation='';c.style.transform=''})}},
+ {id:'O3',g:'o',n:'Карточка переворачивается',d:'Нажмите: на обороте появляется пояснение.',
+  h:`<button class="flip" type="button" aria-label="Перевернуть карточку"><div><span class="big">«Дорого»</span><span>Что именно кажется дорогим и с чем клиент сравнивает</span></div></button>`,
+  init(el){$('.flip',el).onclick=e=>e.currentTarget.classList.toggle('on')},
+  play(el){const f=$('.flip',el);f.classList.remove('on');tm(el,()=>f.classList.add('on'),900);tm(el,()=>f.classList.remove('on'),3600)}},
+ {id:'O4',g:'o',n:'Кнопка тянется к курсору',d:'Наведите рядом: кнопка «магнитится» к мыши.',loop:0,
+  h:`<button class="sbtn mag" type="button">Получить разбор проекта</button>`,
+  init(el){const b=$('.mag',el);ptr(el,(x,y,r)=>{b.style.transform=`translate(${(x-.5)*r.width*.3}px,${(y-.5)*r.height*.3}px)`},()=>b.style.transform='')}},
+ {id:'O5',g:'o',n:'Свой курсор со шлейфом',d:'Наведите: вместо стрелки точка и кольцо, которое догоняет её с задержкой.',loop:0,
+  h:`<span class="mut">Поводите мышью внутри блока</span><i class="ring"></i><i class="dot"></i>`,cls:'cur',
+  init(el){const d=$('.dot',el),r=$('.ring',el);let x=.5,y=.5,rx=100,ry=90;ptr(el,(a,b)=>{x=a;y=b});
+   ticks.push([el,t=>{if(!el._in){x=.5+Math.cos(t/900)*.3;y=.5+Math.sin(t/600)*.3}const w=el.clientWidth,h=el.clientHeight;rx+=(x*w-rx)*.12;ry+=(y*h-ry)*.12;d.style.transform=`translate(${x*w}px,${y*h}px)`;r.style.transform=`translate(${rx}px,${ry}px)`}])}},
+ {id:'O6',g:'o',n:'Частицы реагируют на мышь',d:'Наведите: золотая пыль на фоне расступается от курсора.',loop:0,
+  h:`<canvas></canvas><div class="big" style="position:relative">GOLD ANALYTICS</div>`,
+  init(el){const cv=$('canvas',el),g=cv.getContext('2d');let m=null;const P=Array.from({length:60},()=>({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*.0012,vy:(Math.random()-.5)*.0012,r:1+Math.random()*2}));
+   ptr(el,(x,y)=>m={x,y},()=>m=null);
+   ticks.push([el,()=>{const w=cv.width=el.clientWidth,h=cv.height=el.clientHeight;g.fillStyle=getComputedStyle(el).getPropertyValue('--pa');P.forEach(p=>{if(m){const dx=p.x-m.x,dy=p.y-m.y,q=dx*dx+dy*dy;if(q<.03){p.x+=dx*.04;p.y+=dy*.04}}p.x=(p.x+p.vx+1)%1;p.y=(p.y+p.vy+1)%1;g.globalAlpha=.75;g.beginPath();g.arc(p.x*w,p.y*h,p.r,0,7);g.fill()})}])}},
+ {id:'O7',g:'o',n:'Параллакс слоёв',d:'Наведите: фоновые фигуры движутся с разной скоростью, появляется глубина.',loop:0,cls:'plx',
+  h:`<i data-k="14" style="width:120px;height:120px;left:8%;top:10%;background:var(--ps)"></i><i data-k="34" style="width:60px;height:60px;right:14%;top:18%;background:var(--pa)"></i><i data-k="60" style="width:22px;height:22px;left:30%;bottom:16%;background:var(--pm)"></i><div class="big" style="position:relative">Где исследование<br>усиливает бизнес</div>`,
+  init(el){let x=.5,y=.5;ptr(el,(a,b)=>{x=a;y=b});ticks.push([el,t=>{if(!el._in){x=.5+Math.cos(t/1400)*.5;y=.5+Math.sin(t/1100)*.5}$$('i',el).forEach(i=>i.style.transform=`translate(${(x-.5)*i.dataset.k}px,${(y-.5)*i.dataset.k}px)`)}])}},
+ {id:'O8',g:'o',n:'График рисуется линией',d:'Линия прочерчивается слева направо, точки загораются по очереди.',
+  h:`<svg class="chart" viewBox="0 0 300 120"><line x1="0" y1="110" x2="300" y2="110"/><line x1="0" y1="60" x2="300" y2="60"/><path pathLength="1" d="M5 100 L75 82 L145 88 L215 46 L295 14"/>${[[75,82],[145,88],[215,46],[295,14]].map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="5" style="--i:${i+1}"/>`).join('')}</svg>`},
+ {id:'O9',g:'o',n:'Шкала заполняется',d:'14 составляющих исследования загораются одна за другой.',
+  h:`<div class="col"><div class="segs">${Array.from({length:14},(_,i)=>`<i style="--i:${i}"></i>`).join('')}</div><span class="mut">14 составляющих исследования</span></div>`},
+ {id:'O10',g:'o',c:1,n:'Раскрывающиеся вопросы',d:'Нажмите на вопрос: ответ плавно раскрывается, остальные сворачиваются.',loop:0,
+  h:`<div class="acc-l">${[['Сколько клиентов нужно опросить?','Обычно мы проводим от 20 до 30 интервью в зависимости от ситуации и задачи исследования.'],['Гарантирует ли исследование рост продаж?','Само исследование не гарантирует рост продаж без качественного внедрения рекомендаций.'],['От чего зависит стоимость?','От задачи исследования, сложности проекта и объёма работ.']].map((q,i)=>`<div class="${i?'':'op'}"><button type="button" aria-expanded="${!i}">${q[0]}</button><div class="ans"><p>${q[1]}</p></div></div>`).join('')}</div>`,
+  init(el){$$('.acc-l button',el).forEach(b=>b.onclick=()=>{const p=b.parentNode,o=p.classList.contains('op');$$('.acc-l>div',el).forEach(d=>{d.classList.remove('op');$('button',d).setAttribute('aria-expanded',false)});if(!o){p.classList.add('op');b.setAttribute('aria-expanded',true)}})}},
+ {id:'O11',g:'o',c:1,n:'Карусель',d:'Слайды листаются стрелками и сами по таймеру.',loop:0,
+  h:`<div class="col"><div class="car"><div class="tr">${['Сегментация ЦА','CJM','JTBD','Банк цитат клиентов'].map(s=>`<div>${s}</div>`).join('')}</div></div><div class="nav"><button type="button" aria-label="Назад">‹</button><span class="mut">1 / 4</span><button type="button" aria-label="Вперёд">›</button></div></div>`,
+  init(el){let i=0;const go=d=>{i=(i+d+4)%4;$('.tr',el).style.transform=`translateX(${-i*100}%)`;$('.nav span',el).textContent=(i+1)+' / 4'};const b=$$('.nav button',el);b[0].onclick=()=>go(-1);b[1].onclick=()=>go(1);if(!RM)setInterval(()=>{el._vis&&!el.matches(':hover')&&go(1)},2600)}},
+ {id:'O12',g:'o',n:'Вкладки с плавной сменой',d:'Нажмите на вкладку: содержимое мягко меняется без перезагрузки.',loop:0,
+  h:`<div class="col"><div class="tabs" role="tablist">${Object.keys(TABS).map((t,i)=>`<button type="button" role="tab" aria-selected="${!i}">${t}</button>`).join('')}</div><p class="tabp in">${TABS['Маркетинг']}</p></div>`,
+  init(el){$$('.tabs button',el).forEach(b=>b.onclick=()=>{$$('.tabs button',el).forEach(x=>x.setAttribute('aria-selected',x===b));const p=$('.tabp',el);p.textContent=TABS[b.textContent];p.classList.remove('in');void p.offsetWidth;p.classList.add('in')})}},
+ {id:'O13',g:'o',c:1,n:'Вращающиеся звёзды-декор',d:'Небольшие фигуры медленно вращаются рядом с заголовком.',loop:0,
+  h:`<svg class="star" viewBox="0 0 64 64">${STAR}</svg><div class="big" style="margin-inline:14px">Наши<br>клиенты</div><svg class="star s2" viewBox="0 0 64 64">${STAR}</svg>`},
+ {id:'O14',g:'o',c:1,n:'Лента логотипов',d:'Логотипы клиентов едут лентой, под курсором логотип подсвечивается, лента замирает.',loop:0,
+  h:`<div class="mqw logos"><div>${['100-балльный репетитор','Лесная резиденция','HMD','Чемпионика','Amberica','CakePro'].map(n=>`<span>${n}</span>`).join('').repeat(2)}</div></div>`},
+ {id:'O15',g:'o',c:1,n:'Всплывающее окно с формой',d:'Форма открывается поверх страницы с затемнением и плавным увеличением.',
+  h:`<button class="sbtn" type="button" data-o>Обсудить исследование</button><div class="ov"><div class="box"><button class="x" type="button" aria-label="Закрыть">×</button><b>Обсудить исследование</b><div class="fld"></div><div class="fld"></div></div></div>`,
+  init(el){const o=$('.ov',el);$('[data-o]',el).onclick=()=>o.classList.add('open');$('.x',el).onclick=()=>o.classList.remove('open')},
+  play(el){const o=$('.ov',el);o.classList.remove('open');tm(el,()=>o.classList.add('open'),900);tm(el,()=>o.classList.remove('open'),3800)}},
+ {id:'O16',g:'o',c:1,n:'Шапка меняется при прокрутке',d:'Меню сжимается и получает фон, сверху растёт линия прогресса чтения.',
+  h:`<div class="scr" tabindex="0"><header><span class="acc">GOLD ANALYTICS</span><span>МЕНЮ</span><u></u></header><p>Современный покупатель стал требовательнее, осторожнее и внимательнее.</p><p>CRM и аналитика не отвечают на главные вопросы.</p><p>Исследование клиентов помогает найти ответы.</p></div>`,
+  init(el){const s=$('.scr',el);s.onscroll=()=>{$('header',s).classList.toggle('sm',s.scrollTop>16);$('u',s).style.width=s.scrollTop/(s.scrollHeight-s.clientHeight)*100+'%'}},
+  play(el){const s=$('.scr',el),m=s.scrollHeight-s.clientHeight,t0=performance.now();(function f(t){const k=(t-t0)/3600;if(k>1||el._in||!el._vis)return;s.scrollTop=m*Math.sin(k*Math.PI);requestAnimationFrame(f)})(t0)}},
+ {id:'O17',g:'o',n:'Кнопка заливается при наведении',d:'Наведите: цвет поднимается снизу и заполняет кнопку.',
+  h:`<button class="fillb" type="button">Обсудить исследование</button>`,
+  play(el){const b=$('.fillb',el);tm(el,()=>b.classList.add('on'),700);tm(el,()=>b.classList.remove('on'),2400)}},
+ {id:'O18',g:'o',n:'Чек-лист с живой кнопкой',d:'Отметьте пункты: текст кнопки подстраивается под ответы посетителя.',loop:0,
+  h:`<div class="col"><div class="chk">${['Заявок много, а продаж мало','Реклама работает хуже и дорожает','Запускается новый продукт','Решения принимаются «по ощущениям»'].map((t,i)=>`<label><input type="checkbox" id="chk${i}">${t}</label>`).join('')}</div><button class="sbtn" type="button">Отметьте свои ситуации</button></div>`,
+  init(el){el.onchange=()=>{const n=$$('input:checked',el).length;$('.sbtn',el).textContent=n?`У вас ${n} из 4 — обсудим`:'Отметьте свои ситуации'}}},
+ {id:'O19',g:'o',c:1,n:'Ползунок бюджета в форме',d:'Подвигайте: сумма меняется на лету.',loop:0,
+  h:`<div class="col"><span class="big acc" id="rngOut">290 000 ₽</span><input class="rng" type="range" id="rng" min="290000" max="2500000" step="10000" value="290000" aria-label="Бюджет"><span class="mut">Бюджет исследования</span></div>`,
+  init(el){$('#rng',el).oninput=e=>$('#rngOut',el).textContent=(+e.target.value).toLocaleString('ru-RU')+' ₽'}},
+ {id:'O20',g:'o',c:1,n:'Карточки приподнимаются',d:'Наведите: карточка поднимается и получает цветную рамку.',
+  h:`<div class="lift"><div>Рост продаж</div><div>Рост среднего чека</div><div>Сильное позиционирование</div></div>`,
+  play(el){$$('.lift div',el).forEach((d,i)=>{tm(el,()=>d.classList.add('hv'),500+i*700);tm(el,()=>d.classList.remove('hv'),1200+i*700)})}},
+ {id:'O21',g:'o',n:'Заставка при загрузке',d:'Логотип собирается по буквам, затем цветная шторка уезжает и открывает первый экран.',
+  h:`<div class="pre"><div class="d-let">${sp('GOLD ANALYTICS')}</div></div><div class="big">Агентство исследования<br>и анализа целевой аудитории</div>`}
+];
+
+/* ===== состояние ===== */
+let S={};try{S=JSON.parse(localStorage.getItem('ga-test')||'{}')}catch(e){}
+const ALL=[...PAL,...ANIM];
+const st=id=>S[id]||(S[id]={v:0,c:''});
+const esc=s=>s.replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+const rateUI=(id,n)=>`<div class="rate"><button class="rb up" type="button" data-id="${id}" data-v="1" aria-pressed="${st(id).v===1}" aria-label="Нравится: ${n}">${THUMB}</button><button class="rb dn" type="button" data-id="${id}" data-v="-1" aria-pressed="${st(id).v===-1}" aria-label="Не нравится: ${n}">${THUMB}</button><input type="text" id="c-${id}" data-id="${id}" value="${esc(st(id).c)}" placeholder="Комментарий" aria-label="Комментарий: ${n}"></div>`;
+
+$('#pg').innerHTML=PAL.map((p,i)=>`<article class="card" data-card="${p.id}"><div class="mock" style="${vars(p.c)}"><span class="br">GOLD ANALYTICS</span><span class="hl">Узнаем, что думают ваши клиенты</span><span class="sb">Агентство исследования и анализа целевой аудитории</span><span class="tx">Находим ценную информацию о ваших клиентах, анализируем её и превращаем в решения, которые помогут увеличить продажи и прибыль.</span><span class="cta">Получить разбор проекта</span><span class="strip">1000+ глубинных интервью · 6+ лет опыта · Россия, Европа</span></div><div class="meta"><h3>${i+1}. ${p.n}</h3></div><div class="sw">${p.c.map(c=>`<i style="background:${c}" title="${c}"></i>`).join('')}</div><div class="hex">${p.c.join(' ')}<br>Контраст текста к фону ${ratio(p.c[3],p.c[0])} : 1</div><div class="meta"><button class="btn mini" type="button" data-try="${i}">Примерить на анимациях</button></div>${rateUI(p.id,p.n)}</article>`).join('');
+$('#chips').innerHTML=PAL.map((p,i)=>`<button class="chip" type="button" data-try="${i}" aria-pressed="false"><i style="background:${p.c[2]}"></i>${i+1}. ${p.n}</button>`).join('');
+const card=a=>`<article class="card" data-card="${a.id}"><div class="stage ${a.cls||''}" id="s-${a.id}">${a.h}</div><div class="meta"><h3>${a.id}. ${a.n}</h3><p>${a.d}</p>${a.c?'<span class="badge">Есть у конкурента</span>':''}</div>${rateUI(a.id,a.n)}</article>`;
+$('#gt').innerHTML=ANIM.filter(a=>a.g==='t').map(card).join('');
+$('#go').innerHTML=ANIM.filter(a=>a.g==='o').map(card).join('');
+
+function setPal(i){$('#anims').style.cssText=vars(PAL[i].c);$$('.chip').forEach((c,k)=>c.setAttribute('aria-pressed',k===i));try{localStorage.setItem('ga-pal',i)}catch(e){}}
+let p0=0;try{p0=+localStorage.getItem('ga-pal')||0}catch(e){}
+setPal(p0);
+
+/* ===== запуск анимаций ===== */
+function replay(a){const el=$('#s-'+a.id);(el._t||[]).forEach(clearInterval);el._t=[];el.classList.remove('run');void el.offsetWidth;el.classList.add('run');a.play&&a.play(el)}
+const io=new IntersectionObserver(es=>es.forEach(e=>{const el=e.target,a=ANIM.find(x=>'s-'+x.id===el.id);el._vis=e.isIntersecting;if(e.isIntersecting&&!el._done){el._done=1;replay(a)}}),{threshold:.35});
+ANIM.forEach(a=>{const el=$('#s-'+a.id);a.init&&a.init(el);el.addEventListener('pointerenter',()=>el._in=1);el.addEventListener('pointerleave',()=>el._in=0);io.observe(el)});
+if(!RM)setInterval(()=>ANIM.forEach(a=>{const el=$('#s-'+a.id);if(a.loop!==0&&el._vis&&!el._in)replay(a)}),6000);
+(function loop(t){ticks.forEach(([el,fn])=>el._vis&&fn(t));requestAnimationFrame(loop)})(0);
+
+/* ===== оценки и отправка ===== */
+function message(){
+  const L=(arr,v)=>arr.filter(x=>st(x.id).v===v).map(x=>x.id+' '+x.n).join('; ')||'—';
+  const name=$('#client').value.trim();
+  let m='Gold Analytics — результаты теста дизайна\n'+(name?'Клиент: '+name+'\n':'')+
+    '\nПАЛИТРЫ\nНравится: '+L(PAL,1)+'\nНе нравится: '+L(PAL,-1)+
+    '\n\nАНИМАЦИИ\nНравится: '+L(ANIM,1)+'\nНе нравится: '+L(ANIM,-1);
+  const c=ALL.filter(x=>st(x.id).c.trim()).map(x=>'• '+x.id+' '+x.n+': '+st(x.id).c.trim());
+  if(c.length)m+='\n\nКОММЕНТАРИИ\n'+c.join('\n');
+  return m;
+}
+function update(){
+  const done=ALL.filter(x=>st(x.id).v).length;
+  $('#cnt').textContent=`Оценено ${done} из ${ALL.length}`;$('#fill').style.width=done/ALL.length*100+'%';
+  ALL.forEach(x=>{const c=$(`[data-card="${x.id}"]`);c.classList.toggle('up',st(x.id).v===1);c.classList.toggle('dn',st(x.id).v===-1)});
+  const m=message();$('#out').value=m;
+  const short=m.length>3500?m.slice(0,3500)+'\n… (текст длинный — остаток отправьте через «Скопировать текст»)':m;
+  $('#sendLink').href='https://t.me/'+TG_USER+'?text='+encodeURIComponent(short);
+  try{localStorage.setItem('ga-test',JSON.stringify(S))}catch(e){}
+  return done;
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.rb');if(b){const s=st(b.dataset.id),v=+b.dataset.v;s.v=s.v===v?0:v;$$(`.rb[data-id="${b.dataset.id}"]`).forEach(x=>x.setAttribute('aria-pressed',+x.dataset.v===s.v));$('#status').textContent='';update();return}
+  const t=e.target.closest('[data-try]');if(t){setPal(+t.dataset.try);if(t.classList.contains('btn'))$('#anims').scrollIntoView({behavior:RM?'auto':'smooth'})}
+});
+document.addEventListener('input',e=>{if(e.target.id==='client'){update();return}const id=e.target.dataset&&e.target.dataset.id;if(id&&e.target.type==='text'){st(id).c=e.target.value;update()}});
+let sending=0;
+const say=(t,ok)=>{const s=$('#status');s.textContent=t;s.className=ok?'ok':'err'};
+$('#sendLink').addEventListener('click',e=>{
+  if(!update()){e.preventDefault();say('Сначала оцените хотя бы один вариант: поставьте палец вверх или вниз.');return}
+  if(FORM_ENDPOINT){e.preventDefault();if(sending)return;sending=1;say('Отправляем…',1);
+    const m=message(),parts=[];for(let i=0;i<m.length;i+=3300)parts.push(m.slice(i,i+3300)+(m.length>3300?`
+[часть ${parts.length+1}]`:''));
+    parts.reduce((p,t)=>p.then(()=>fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:t})}).then(r=>r.json()).then(j=>{if(!j.ok)throw 0})),Promise.resolve())
+      .then(()=>say('Результаты отправлены. Спасибо!',1))
+      .catch(()=>say('Не получилось отправить автоматически. Нажмите «Скопировать текст» и пришлите его в Telegram @'+TG_USER+'.'))
+      .finally(()=>sending=0);
+    return}
+  say('Telegram открывается с готовым сообщением. Нажмите в чате «Отправить». Если чат не открылся, скопируйте текст и пришлите его на @'+TG_USER+'.',1);
+});
+$('#copy').addEventListener('click',()=>{const o=$('#out');const fb=()=>{o.focus();o.select();say('Текст выделен — скопируйте его вручную.',1)};
+  navigator.clipboard?navigator.clipboard.writeText(o.value).then(()=>say('Текст скопирован.',1)).catch(fb):fb()});
+update();
+</script>
+
+</body></html>
