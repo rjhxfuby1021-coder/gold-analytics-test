@@ -72,13 +72,14 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 .sw{display:flex;gap:6px;flex-wrap:wrap;padding:16px 24px 0}
 .sw i{flex:1 1 44px;min-width:44px;height:30px;border-radius:6px;border:1px solid var(--line)}
 .hex{padding:8px 24px 0;font:400 12px/1.7 var(--f-mono);color:var(--sub);word-spacing:4px}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips,.fchips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{font:500 13px/1 var(--f-body);padding:8px 12px;border-radius:20px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:6px}
 .chip i{width:12px;height:12px;border-radius:50%;border:1px solid var(--line)}
 .chip[aria-pressed="true"]{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold);background:var(--gold-soft)}
 /* stage */
 .stage{border-bottom:1px solid var(--line);position:relative;height:190px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center}
-.stage .big{font:600 20px/1.25 var(--f-display)}
+.stage .big{font:var(--dw,600) 20px/1.25 var(--f-display)}
+.stage .big,.d-let b,.d-fill,.nums b,.car .tr div,.flip .big{font-style:var(--di,normal);text-transform:var(--dt,none)}
 .stage .acc{color:var(--pa)}
 .stage .mut{color:var(--pm);font-size:13px}
 .sbtn{background:var(--pa);color:var(--po);border:0;border-radius:8px;font:500 14px/1 var(--f-body);padding:12px 18px;cursor:pointer}
@@ -94,14 +95,14 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 .run .d-lines i{animation:up .8s var(--e) both;animation-delay:calc(var(--i)*.14s)}
 .tw::after{content:"";display:inline-block;width:2px;height:1em;background:var(--pa);margin-left:3px;vertical-align:-2px;animation:fade .5s steps(1) infinite alternate}
 .rw{display:inline-block;color:var(--pa)}.rw.in{animation:fup .45s var(--e) both}
-.d-let b{display:inline-block;font:600 18px/1 var(--f-display);opacity:0}
+.d-let b{display:inline-block;font:var(--dw,600) 18px/1 var(--f-display);opacity:0}
 .run .d-let b{animation:let .6s var(--e) both;animation-delay:calc(var(--i)*.05s)}
 @keyframes let{from{opacity:0;transform:translateY(20px) rotate(12deg)}to{opacity:1;transform:none}}
-.d-fill{font:600 19px/1.3 var(--f-display);background:linear-gradient(90deg,var(--pa) 50%,var(--pm) 50%) 100% 0/200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+.d-fill{font:var(--dw,600) 19px/1.3 var(--f-display);background:linear-gradient(90deg,var(--pa) 50%,var(--pm) 50%) 100% 0/200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
 .run .d-fill{animation:fillx 2.2s linear both}@keyframes fillx{to{background-position:0 0}}
 .nums{display:flex;gap:22px;flex-wrap:wrap;justify-content:center}.nums div{display:flex;flex-direction:column;gap:4px}
-.nums b{font:600 24px/1 var(--f-display);color:var(--pa);font-variant-numeric:tabular-nums}
-.od b{display:inline-block;height:1em;overflow:hidden;line-height:1;font:600 34px/1 var(--f-display);color:var(--pa)}
+.nums b{font:var(--dw,600) 24px/1 var(--f-display);color:var(--pa);font-variant-numeric:tabular-nums}
+.od b{display:inline-block;height:1em;overflow:hidden;line-height:1;font:var(--dw,600) 34px/1 var(--f-display);color:var(--pa)}
 .od b i{display:block;font-style:normal;line-height:1}
 .run .od b i{animation:od 1.6s var(--e) both;animation-delay:calc(var(--i)*.1s)}@keyframes od{to{transform:translateY(calc(var(--d)*-1em))}}
 .mqw{position:absolute;left:0;right:0;overflow:hidden;white-space:nowrap;padding:10px 0;background:var(--ps)}
@@ -142,7 +143,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 .acc-l .ans{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--e)}.acc-l .op .ans{grid-template-rows:1fr}
 .acc-l .ans p{overflow:hidden;font-size:12px;color:var(--pm);padding-inline:12px}
 .car{width:100%;max-width:300px;overflow:hidden;border-radius:10px}.car .tr{display:flex;transition:transform .6s var(--e)}
-.car .tr div{flex:0 0 100%;background:var(--ps);padding:26px 12px;font:600 15px/1.2 var(--f-display)}
+.car .tr div{flex:0 0 100%;background:var(--ps);padding:26px 12px;font:var(--dw,600) 15px/1.2 var(--f-display)}
 .nav{display:flex;gap:8px;align-items:center}.nav button{width:32px;height:32px;border-radius:50%;border:1px solid var(--pa);background:none;color:var(--pa);cursor:pointer;font-size:16px}
 .tabs{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
 .tabs button{background:none;border:1px solid var(--ps);color:var(--pm);border-radius:20px;padding:6px 10px;font:500 12px/1 var(--f-body);cursor:pointer}
@@ -218,8 +219,11 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{
 
   <section class="sec" id="anims">
     <h2>3. Анимация текста</h2>
-    <p class="lead">Движение повторяется само. Там, где написано «наведите» или «нажмите», попробуйте сами.</p>
+    <p class="lead">Движение повторяется само. Там, где написано «наведите» или «нажмите», попробуйте сами. Анимации показаны в выбранных гамме и шрифте — переключайте их здесь или ставьте палец вверх понравившимся выше.</p>
+    <p class="eyebrow">Гамма</p>
     <div class="chips" role="group" aria-label="Гамма для примерки"></div>
+    <p class="eyebrow">Шрифт</p>
+    <div class="fchips chips-f" role="group" aria-label="Шрифт для примерки"></div>
     <div class="grid" id="gt"></div>
     <h2 style="margin-top:20px">4. Анимация объектов</h2>
     <div class="grid" id="go"></div>
@@ -429,7 +433,8 @@ const rateUI=(id,n)=>`<div class="rate"><button class="rb up" type="button" data
 
 $('#pg').innerHTML=PAL.map((p,i)=>`<article class="card" data-card="${p.id}"><div class="mock" style="${vars(p.c)}"><span class="br">GOLD ANALYTICS</span><span class="hl">Узнаем, что думают ваши клиенты</span><span class="sb">Агентство исследования и анализа целевой аудитории</span><span class="tx">Находим ценную информацию о ваших клиентах, анализируем её и превращаем в решения, которые помогут увеличить продажи и прибыль.</span><span class="cta">Получить разбор проекта</span><span class="strip">1000+ глубинных интервью · 6+ лет опыта · Россия, Европа</span></div><div class="meta"><h3>${i+1}. ${p.n}</h3></div><div class="sw">${p.c.map(c=>`<i style="background:${c}" title="${c}"></i>`).join('')}</div><div class="hex">${p.c.join(' ')}<br>Контраст текста к фону ${ratio(p.c[3],p.c[0])} : 1</div><div class="meta"><button class="btn mini" type="button" data-try="${i}">Примерить на анимациях</button></div>${rateUI(p.id,p.n)}</article>`).join('');
 $$('.chips').forEach(c=>c.innerHTML=PAL.map((p,i)=>`<button class="chip" type="button" data-try="${i}" aria-pressed="false"><i style="background:${p.c[2]}"></i>${i+1}. ${p.n}</button>`).join(''));
-$('#gf').innerHTML=FONT.map(f=>`<article class="card" data-card="${f.id}"><div class="fmock" style="--fh:'${f.h}',serif;--fb:'${f.b}',sans-serif;--hi:${f.hi};--hw:${f.w};--hs:${f.s};--hl:${f.l};--ht:${f.t};${f.a?'--fa:'+f.a+(f.a.includes('Caveat')?';--as:1.35em;--aw:700':''):''}"><span class="aa" aria-hidden="true">Аа</span><span class="br">Gold Analytics</span><span class="hl">Узнаем, что <em>на самом деле</em> думают ваши клиенты</span><span class="tx">Находим ценную информацию о ваших клиентах, анализируем её и превращаем в решения, которые помогут увеличить продажи и прибыль.</span><span class="sb">1000+ глубинных интервью · 6+ лет опыта</span><span class="cta">Получить разбор проекта</span></div><div class="meta"><h3>${f.id}. ${f.n}</h3><p>${f.pair}. ${f.d}</p></div>${rateUI(f.id,f.n)}</article>`).join('');
+$('#gf').innerHTML=FONT.map(f=>`<article class="card" data-card="${f.id}"><div class="fmock" style="--fh:'${f.h}',serif;--fb:'${f.b}',sans-serif;--hi:${f.hi};--hw:${f.w};--hs:${f.s};--hl:${f.l};--ht:${f.t};${f.a?'--fa:'+f.a+(f.a.includes('Caveat')?';--as:1.35em;--aw:700':''):''}"><span class="aa" aria-hidden="true">Аа</span><span class="br">Gold Analytics</span><span class="hl">Узнаем, что <em>на самом деле</em> думают ваши клиенты</span><span class="tx">Находим ценную информацию о ваших клиентах, анализируем её и превращаем в решения, которые помогут увеличить продажи и прибыль.</span><span class="sb">1000+ глубинных интервью · 6+ лет опыта</span><span class="cta">Получить разбор проекта</span></div><div class="meta"><h3>${f.id}. ${f.n}</h3><p>${f.pair}. ${f.d}</p><button class="btn mini" type="button" data-tryf="${FONT.indexOf(f)}" style="align-self:flex-start">Примерить на анимациях</button></div>${rateUI(f.id,f.n)}</article>`).join('');
+$('.fchips').innerHTML=FONT.map((f,i)=>`<button class="chip" type="button" data-tryf="${i}" aria-pressed="false" style="font-family:'${f.h}',serif;font-style:${f.hi}">${f.id}. ${f.n}</button>`).join('');
 const card=a=>`<article class="card" data-card="${a.id}"><div class="stage ${a.cls||''}" id="s-${a.id}">${a.h}</div><div class="meta"><h3>${a.id}. ${a.n}</h3><p>${a.d}</p>${a.c?'<span class="badge">Есть у конкурента</span>':''}</div>${rateUI(a.id,a.n)}</article>`;
 $('#gt').innerHTML=ANIM.filter(a=>a.g==='t').map(card).join('');
 $('#go').innerHTML=ANIM.filter(a=>a.g==='o').map(card).join('');
@@ -441,9 +446,14 @@ $('.filters').innerHTML=[['','Все'],['a','Анимация'],['r','Читаб
 $('.filters').onclick=e=>{const b=e.target.closest('[data-f]');if(!b)return;$$('.filters .chip').forEach(c=>c.setAttribute('aria-pressed',c===b));$$('#gr .ref').forEach(c=>c.hidden=!!b.dataset.f&&!c.dataset.t.includes(b.dataset.f))};
 $('#rl').innerHTML=REF.map(x=>`<li><a href="${x.u}" target="_blank" rel="noopener">${x.n}</a> — ${x.l[0]}</li>`).join('');
 
-function setPal(i){curPal=i;$('#anims').style.cssText=$('#fonts').style.cssText=vars(PAL[i].c);$$('.chips .chip').forEach(c=>c.setAttribute('aria-pressed',+c.dataset.try===i));try{localStorage.setItem('ga-pal',i)}catch(e){}}
+const setVars=(el,str)=>str.split(';').forEach(kv=>{const k=kv.indexOf(':');if(k>0)el.style.setProperty(kv.slice(0,k),kv.slice(k+1))});
+let curFont=0;
+function setFont(i){curFont=i;const f=FONT[i],a=$('#anims');a.style.setProperty('--f-display',`'${f.h}',serif`);a.style.setProperty('--f-body',`'${f.b}',sans-serif`);a.style.setProperty('--dw',f.w);a.style.setProperty('--di',f.hi);a.style.setProperty('--dt',f.t);$$('.fchips .chip').forEach(c=>c.setAttribute('aria-pressed',+c.dataset.tryf===i));try{localStorage.setItem('ga-font',i)}catch(e){}}
+function setPal(i){curPal=i;setVars($('#anims'),vars(PAL[i].c));setVars($('#fonts'),vars(PAL[i].c));$$('.chips .chip').forEach(c=>c.setAttribute('aria-pressed',+c.dataset.try===i));try{localStorage.setItem('ga-pal',i)}catch(e){}}
 let p0=0;try{p0=+localStorage.getItem('ga-pal')||0}catch(e){}
 setPal(p0);
+let f0=0;try{f0=+localStorage.getItem('ga-font')||0}catch(e){}
+setFont(Math.min(f0,FONT.length-1));
 
 /* ===== запуск анимаций ===== */
 function replay(a){const el=$('#s-'+a.id);(el._t||[]).forEach(clearInterval);el._t=[];el.classList.remove('run');void el.offsetWidth;el.classList.add('run');a.play&&a.play(el)}
@@ -458,7 +468,7 @@ function message(){
   let m='Gold Analytics — результаты теста дизайна\n'+
     '\nПАЛИТРЫ\nНравится: '+L(PAL,1)+'\nНе нравится: '+L(PAL,-1)+
     '\n\nШРИФТЫ (смотрел в гамме '+PAL[curPal].id+')\nНравится: '+L(FONT,1)+'\nНе нравится: '+L(FONT,-1)+
-    '\n\nАНИМАЦИИ\nНравится: '+L(ANIM,1)+'\nНе нравится: '+L(ANIM,-1)+
+    '\n\nАНИМАЦИИ (смотрел в гамме '+PAL[curPal].id+' и шрифте '+FONT[curFont].id+')\nНравится: '+L(ANIM,1)+'\nНе нравится: '+L(ANIM,-1)+
     '\n\nРЕФЕРЕНСЫ\nНравится: '+L(REF,1)+'\nНе нравится: '+L(REF,-1);
   const c=ALL.filter(x=>st(x.id).c.trim()).map(x=>'• '+x.id+' '+x.n+': '+st(x.id).c.trim());
   if(c.length)m+='\n\nКОММЕНТАРИИ\n'+c.join('\n');
@@ -475,7 +485,8 @@ function update(){
   return done;
 }
 document.addEventListener('click',e=>{
-  const b=e.target.closest('.rb');if(b){const s=st(b.dataset.id),v=+b.dataset.v;s.v=s.v===v?0:v;$$(`.rb[data-id="${b.dataset.id}"]`).forEach(x=>x.setAttribute('aria-pressed',+x.dataset.v===s.v));const pi=PAL.findIndex(p=>p.id===b.dataset.id);if(pi>=0&&s.v===1)setPal(pi);$('#status').textContent='';update();return}
+  const b=e.target.closest('.rb');if(b){const s=st(b.dataset.id),v=+b.dataset.v;s.v=s.v===v?0:v;$$(`.rb[data-id="${b.dataset.id}"]`).forEach(x=>x.setAttribute('aria-pressed',+x.dataset.v===s.v));const pi=PAL.findIndex(p=>p.id===b.dataset.id);if(pi>=0&&s.v===1)setPal(pi);const fi=FONT.findIndex(f=>f.id===b.dataset.id);if(fi>=0&&s.v===1)setFont(fi);$('#status').textContent='';update();return}
+  const tf=e.target.closest('[data-tryf]');if(tf){setFont(+tf.dataset.tryf);if(tf.classList.contains('btn'))$('#anims').scrollIntoView({behavior:RM?'auto':'smooth'});return}
   const t=e.target.closest('[data-try]');if(t){setPal(+t.dataset.try);if(t.classList.contains('btn'))$('#fonts').scrollIntoView({behavior:RM?'auto':'smooth'})}
 });
 document.addEventListener('input',e=>{const id=e.target.dataset&&e.target.dataset.id;if(id&&e.target.type==='text'){st(id).c=e.target.value;update()}});
